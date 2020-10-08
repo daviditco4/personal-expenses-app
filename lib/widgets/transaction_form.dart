@@ -9,6 +9,23 @@ class TransactionForm extends StatelessWidget {
 
   TransactionForm({@required this.onSubmit});
 
+  void _submitForm() {
+    final titleInput = titleController.text;
+    final amountInput = amountController.text;
+    final amountDouble = amountInput.isEmpty ? 0.0 : double.parse(amountInput);
+
+    if (titleInput.isNotEmpty && amountDouble > 0) {
+      onSubmit(
+        Transaction(
+          id: 't3',
+          title: titleInput,
+          amount: amountDouble,
+          date: DateTime.now(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,25 +36,21 @@ class TransactionForm extends StatelessWidget {
           children: [
             TextField(
               controller: titleController,
+              onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(
                 labelText: 'Title',
               ),
             ),
             TextField(
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(
                 labelText: 'Amount',
               ),
             ),
             FlatButton(
-              onPressed: () => onSubmit(
-                Transaction(
-                  id: 't3',
-                  title: titleController.text,
-                  amount: double.parse(amountController.text),
-                  date: DateTime.now(),
-                ),
-              ),
+              onPressed: _submitForm,
               textColor: Colors.purple,
               child: Text('Add Transaction'),
             ),
