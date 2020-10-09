@@ -51,18 +51,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Record Player',
-      amount: 249.9,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Vinyl Record',
-      amount: 9.99,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Record Player',
+    //   amount: 249.9,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Vinyl Record',
+    //   amount: 9.99,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _showTransactionForm(BuildContext context) {
