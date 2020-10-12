@@ -11,7 +11,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380,
+      height: 380.0,
       child: _transactions.isNotEmpty
           ? ListView.builder(
               itemCount: _transactions.length,
@@ -20,21 +20,20 @@ class TransactionList extends StatelessWidget {
                   children: [
                     Container(
                       margin: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
+                        horizontal: 15.0,
+                        vertical: 10.0,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Theme.of(context).primaryColor,
-                          width: 1,
                         ),
                       ),
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10.0),
                       child: Text(
                         '\$${_transactions[index].amount.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 20.0,
                           color: Theme.of(context).primaryColor,
                         ),
                       ),
@@ -61,13 +60,14 @@ class TransactionList extends StatelessWidget {
           : Column(
               children: [
                 Container(
-                  height: 200,
+                  height: 200.0,
+                  padding: EdgeInsets.all(35.0),
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.0),
                 Text(
                   'No transactions added yet',
                   style: Theme.of(context).textTheme.headline6,

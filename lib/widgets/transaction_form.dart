@@ -21,7 +21,7 @@ class _TransactionFormState extends State<TransactionForm> {
     final amountInput = amountController.text;
     final amountDouble = amountInput.isEmpty ? 0.0 : double.parse(amountInput);
 
-    if (titleInput.isNotEmpty && amountDouble > 0) {
+    if (titleInput.isNotEmpty && amountDouble > 0.0) {
       widget.onSubmit(
         Transaction(
           id: 't3',
@@ -37,7 +37,7 @@ class _TransactionFormState extends State<TransactionForm> {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

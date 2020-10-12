@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/transaction.dart';
 import 'widgets/transaction_form.dart';
 import 'widgets/transaction_list.dart';
+import 'widgets/transactions_chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
           headline6: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 16.0,
           ),
         ),
         appBarTheme: AppBarTheme(
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
             headline6: TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 20.0,
               color: Colors.black,
             ),
           ),
@@ -65,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   void _showTransactionForm(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -92,13 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART'),
-              ),
-            ),
+            TransactionsChart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
