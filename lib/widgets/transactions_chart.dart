@@ -37,14 +37,13 @@ class TransactionsChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(15.0),
-      elevation: 4.0,
+      elevation: 5.0,
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionsData.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
+            return Expanded(
               child: ChartBar(
                 title: data['day'],
                 spendingAmount: data['amount'],

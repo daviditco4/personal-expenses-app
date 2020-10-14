@@ -11,49 +11,33 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380.0,
+      height: 340.0,
       child: _transactions.isNotEmpty
           ? ListView.builder(
               itemCount: _transactions.length,
               itemBuilder: (_, index) => Card(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                        vertical: 10.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        '\$${_transactions[index].amount.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                          color: Theme.of(context).primaryColor,
+                elevation: 5.0,
+                margin: EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30.0,
+                    backgroundColor: Theme.of(context).primaryColorDark,
+                    child: Padding(
+                      padding: EdgeInsets.all(6.0),
+                      child: FittedBox(
+                        child: Text(
+                          '\$${_transactions[index].amount.toStringAsFixed(2)}',
                         ),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _transactions[index].title,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        Text(
-                          DateFormat.yMMMd().format(_transactions[index].date),
-                          style: TextStyle(
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
+                  title: Text(
+                    _transactions[index].title,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  subtitle: Text(
+                    DateFormat.yMMMd().format(_transactions[index].date),
+                  ),
                 ),
               ),
             )
