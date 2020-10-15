@@ -25,7 +25,7 @@ class _TransactionFormState extends State<TransactionForm> {
     if (titleInput.isNotEmpty && amountDouble > 0.0 && _pickedDate != null) {
       widget.onSubmit(
         Transaction(
-          id: 't3',
+          id: DateTime.now().toString(),
           title: titleInput,
           amount: amountDouble,
           date: _pickedDate,

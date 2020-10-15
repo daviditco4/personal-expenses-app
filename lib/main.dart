@@ -84,6 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
             onPressed: () => _showTransactionForm(context),
+            icon: Icon(Icons.add),
           ),
         ],
       ),
@@ -100,7 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             TransactionsChart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(
+              _transactions,
+              deleteTx: _deleteTransaction,
+            ),
           ],
         ),
       ),
