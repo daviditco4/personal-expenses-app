@@ -12,13 +12,13 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 340.0,
+      height: 430.0,
       child: _transactions.isNotEmpty
           ? ListView.builder(
               itemCount: _transactions.length,
               itemBuilder: (_, index) => Card(
                 elevation: 5.0,
-                margin: EdgeInsets.all(8.0),
+                margin: EdgeInsets.all(6.0),
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 30.0,
