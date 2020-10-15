@@ -51,20 +51,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Record Player',
-    //   amount: 249.9,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Vinyl Record',
-    //   amount: 9.99,
-    //   date: DateTime.now(),
-    // ),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -75,12 +62,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showTransactionForm(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => TransactionForm(
-        onSubmit: (tx) {
-          setState(() => _transactions.add(tx));
-          Navigator.of(context).pop();
-        },
-      ),
+      builder: (_) {
+        return TransactionForm(
+          onSubmit: (tx) {
+            setState(() => _transactions.add(tx));
+            Navigator.of(context).pop();
+          },
+        );
+      },
     );
   }
 
@@ -92,26 +81,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(widget.title),
+      actions: [
+        IconButton(
+          onPressed: () => _showTransactionForm(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+    final media = MediaQuery.of(context);
+    final bodyHeight =
+        media.size.height - (media.padding.top + appBar.preferredSize.height);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () => _showTransactionForm(context),
-            icon: Icon(Icons.add),
+      appBar: appBar,
+      body: Column(
+        children: [
+          Container(
+            height: 0.3 * bodyHeight,
+            child: TransactionsChart(_recentTransactions),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TransactionsChart(_recentTransactions),
-            TransactionList(
+          Container(
+            height: 0.7 * bodyHeight,
+            child: TransactionList(
               _transactions,
               deleteTx: _deleteTransaction,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(

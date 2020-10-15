@@ -11,12 +11,11 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 430.0,
-      child: _transactions.isNotEmpty
-          ? ListView.builder(
-              itemCount: _transactions.length,
-              itemBuilder: (_, index) => Card(
+    return _transactions.isNotEmpty
+        ? ListView.builder(
+            itemCount: _transactions.length,
+            itemBuilder: (_, index) {
+              return Card(
                 elevation: 5.0,
                 margin: EdgeInsets.all(6.0),
                 child: ListTile(
@@ -45,25 +44,25 @@ class TransactionList extends StatelessWidget {
                     icon: Icon(Icons.delete),
                   ),
                 ),
+              );
+            },
+          )
+        : Column(
+            children: [
+              Container(
+                height: 200.0,
+                padding: EdgeInsets.all(30.0),
+                child: Image.asset(
+                  'assets/images/waiting.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-            )
-          : Column(
-              children: [
-                Container(
-                  height: 200.0,
-                  padding: EdgeInsets.all(30.0),
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                Text(
-                  'No transactions added yet',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            ),
-    );
+              SizedBox(height: 20.0),
+              Text(
+                'No transactions added yet',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          );
   }
 }
