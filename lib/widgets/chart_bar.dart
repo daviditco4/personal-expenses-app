@@ -13,16 +13,17 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final barWidth = 12.0;
     final verticalSpace = SizedBox(height: 5.0);
     final borders = Border.all();
-    final circularBorder = BorderRadius.circular(10.0);
+    final circularBorder = BorderRadius.circular(barWidth / 2);
 
     return Column(
       children: [
         Text(title),
         verticalSpace,
         Container(
-          width: 20.0,
+          width: barWidth,
           height: 80.0,
           child: Stack(
             children: [
@@ -47,12 +48,15 @@ class ChartBar extends StatelessWidget {
           ),
         ),
         verticalSpace,
-        FittedBox(
-          child: Text(
-            '\$${spendingAmount.toStringAsFixed(0)}',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
+        Container(
+          height: 18.0,
+          child: FittedBox(
+            child: Text(
+              '\$${spendingAmount.toStringAsFixed(0)}',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
