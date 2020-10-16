@@ -52,6 +52,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  var _showingChart = false;
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
@@ -81,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final isLandscape = media.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text(widget.title),
       actions: [
@@ -90,9 +93,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
-    final media = MediaQuery.of(context);
     final bodyHeight =
         media.size.height - (media.padding.top + appBar.preferredSize.height);
+    final transactionsChart = TransactionsChart(_recentTransactions);
+    final transactionList = TransactionList(
+      _transactions,
+      deleteTx: _deleteTransaction,
+    );
 
     return Scaffold(
       appBar: appBar,
@@ -100,22 +107,38 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Container(
             height: 0.3 * bodyHeight,
-            child: TransactionsChart(_recentTransactions),
+            child: isLandscape
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Show chart'),
+                      Switch(
+                        value: _showingChart,
+                        onChanged: (value) {
+                          setState(() => _showingChart = value);
+                        },
+                      ),
+                    ],
+                  )
+                : transactionsChart,
           ),
           Container(
             height: 0.7 * bodyHeight,
-            child: TransactionList(
-              _transactions,
-              deleteTx: _deleteTransaction,
-            ),
+            child: isLandscape
+                ? _showingChart
+                    ? transactionsChart
+                    : transactionList
+                : transactionList,
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showTransactionForm(context),
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: isLandscape
+          ? null
+          : FloatingActionButton(
+              onPressed: () => _showTransactionForm(context),
+              child: Icon(Icons.add),
+            ),
     );
   }
 }

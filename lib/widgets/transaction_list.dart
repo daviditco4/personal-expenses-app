@@ -47,22 +47,25 @@ class TransactionList extends StatelessWidget {
               );
             },
           )
-        : Column(
-            children: [
-              Container(
-                height: 200.0,
-                padding: EdgeInsets.all(30.0),
-                child: Image.asset(
-                  'assets/images/waiting.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                'No transactions added yet',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ],
+        : LayoutBuilder(
+            builder: (_, constraints) {
+              return Column(
+                children: [
+                  Container(
+                    height: 0.5 * constraints.maxHeight,
+                    padding: EdgeInsets.all(0.08 * constraints.maxHeight),
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Text(
+                    'No transactions added yet',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ],
+              );
+            },
           );
   }
 }
