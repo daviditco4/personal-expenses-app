@@ -29,8 +29,12 @@ class TransactionsChart extends StatelessWidget {
     });
   }
 
-  double get totalSpending {
-    return _recentTransactions.fold(0.0, (sum, tx) => sum + tx.amount);
+  double get maxSpending {
+    var max = 0.0;
+    for (var tx in _recentTransactions) {
+      max = tx.amount > max ? tx.amount : max;
+    }
+    return max;
   }
 
   @override
@@ -47,9 +51,9 @@ class TransactionsChart extends StatelessWidget {
               child: ChartBar(
                 title: data['day'],
                 spendingAmount: data['amount'],
-                spendingFractionOfTotal: totalSpending == 0.0
+                spendingFractionOfMax: maxSpending == 0.0
                     ? 0.0
-                    : (data['amount'] as double) / totalSpending,
+                    : (data['amount'] as double) / maxSpending,
               ),
             );
           }).toList(),

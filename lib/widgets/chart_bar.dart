@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class ChartBar extends StatelessWidget {
   final String title;
   final double spendingAmount;
-  final double spendingFractionOfTotal;
+  final double spendingFractionOfMax;
 
   ChartBar({
     @required this.title,
     @required this.spendingAmount,
-    @required this.spendingFractionOfTotal,
+    @required this.spendingFractionOfMax,
   });
 
   @override
@@ -42,7 +42,7 @@ class ChartBar extends StatelessWidget {
                     ),
                   ),
                   FractionallySizedBox(
-                    heightFactor: spendingFractionOfTotal,
+                    heightFactor: spendingFractionOfMax,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
