@@ -53,55 +53,61 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: _titleController,
-              onSubmitted: (_) => _submitForm(),
-              decoration: InputDecoration(
-                labelText: 'Title',
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: _titleController,
+                onSubmitted: (_) => _submitForm(),
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
               ),
-            ),
-            TextField(
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitForm(),
-              decoration: InputDecoration(
-                labelText: 'Amount',
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitForm(),
+                decoration: InputDecoration(
+                  labelText: 'Amount',
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _pickedDate == null
-                          ? 'Choose a date'
-                          : 'Date: ${DateFormat.yMd().format(_pickedDate)}',
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _pickedDate == null
+                            ? 'Choose a date'
+                            : 'Date: ${DateFormat.yMd().format(_pickedDate)}',
+                      ),
                     ),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: _pickDate,
-                    child: Text(
-                      'Select',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      onPressed: _pickDate,
+                      child: Text(
+                        'Select',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            RaisedButton(
-              onPressed: _submitForm,
-              color: Theme.of(context).primaryColor,
-              child: Text('Add Transaction'),
-            ),
-          ],
+              RaisedButton(
+                onPressed: _submitForm,
+                color: Theme.of(context).primaryColor,
+                child: Text('Add Transaction'),
+              ),
+            ],
+          ),
         ),
       ),
     );
