@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,8 +14,10 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cupertinoTheme = CupertinoTheme.of(context);
     final theme = Theme.of(context);
-    final deleteIcon = Icon(Icons.delete);
+    final deleteIcon =
+        Platform.isAndroid ? Icon(CupertinoIcons.delete) : Icon(Icons.delete);
 
     return _transactions.isNotEmpty
         ? ListView.builder(
@@ -24,12 +29,18 @@ class TransactionList extends StatelessWidget {
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 30.0,
-                    backgroundColor: theme.primaryColorDark,
+                    backgroundColor: Platform.isAndroid
+                        ? (cupertinoTheme.primaryColor as CupertinoDynamicColor)
+                            .darkColor
+                        : theme.primaryColorDark,
                     child: Padding(
                       padding: EdgeInsets.all(6.0),
                       child: FittedBox(
                         child: Text(
                           '\$${_transactions[index].amount.toStringAsFixed(2)}',
+                          style: Platform.isAndroid
+                              ? cupertinoTheme.textTheme.textStyle
+                              : null,
                         ),
                       ),
                     ),
@@ -46,7 +57,12 @@ class TransactionList extends StatelessWidget {
                           onPressed: () => deleteTx(_transactions[index].id),
                           textColor: theme.errorColor,
                           icon: deleteIcon,
-                          label: Text('DELETE'),
+                          label: Text(
+                            'DELETE',
+                            style: Platform.isAndroid
+                                ? cupertinoTheme.textTheme.textStyle
+                                : null,
+                          ),
                         )
                       : IconButton(
                           onPressed: () => deleteTx(_transactions[index].id),

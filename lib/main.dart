@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'models/transaction.dart';
@@ -10,34 +13,52 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Personal Expenses App',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        primaryColorBrightness: Brightness.light,
-        accentColor: Colors.deepPurple.shade200,
-        fontFamily: 'Quicksand',
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.bold,
-            fontSize: 16.0,
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          textTheme: TextTheme(
-            headline6: TextStyle(
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-              color: Colors.black,
+    final title = 'Personal Expenses App';
+    final homePage = MyHomePage(title: 'Personal Expenses');
+
+    return Platform.isAndroid
+        ? CupertinoApp(
+            title: title,
+            theme: CupertinoThemeData(
+              primaryColor: CupertinoColors.systemGreen,
+              primaryContrastingColor: CupertinoColors.black,
+              textTheme: CupertinoTextThemeData(
+                textStyle: TextStyle(
+                  color: CupertinoColors.black,
+                  fontFamily: 'Quicksand',
+                ),
+              ),
             ),
-          ),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Personal Expenses'),
-    );
+            home: homePage,
+          )
+        : MaterialApp(
+            title: title,
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+              primaryColorBrightness: Brightness.light,
+              accentColor: Colors.deepPurple.shade200,
+              fontFamily: 'Quicksand',
+              textTheme: TextTheme(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
+              ),
+              appBarTheme: AppBarTheme(
+                textTheme: TextTheme(
+                  headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: homePage,
+          );
   }
 }
 
@@ -85,15 +106,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final isLandscape = media.orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text(widget.title),
-      actions: [
-        IconButton(
-          onPressed: () => _showTransactionForm(context),
-          icon: Icon(Icons.add),
-        ),
-      ],
-    );
+    final titleText = Text(widget.title);
+    final PreferredSizeWidget appBar = Platform.isAndroid
+        ? CupertinoNavigationBar(
+            middle: titleText,
+            trailing: CupertinoButton(
+              onPressed: () => _showTransactionForm(context),
+              padding: EdgeInsets.zero,
+              child: Icon(CupertinoIcons.add, size: 28.0),
+            ),
+          )
+        : AppBar(
+            title: titleText,
+            actions: [
+              IconButton(
+                onPressed: () => _showTransactionForm(context),
+                icon: Icon(Icons.add),
+              ),
+            ],
+          );
     final bodyHeight =
         media.size.height - (media.padding.top + appBar.preferredSize.height);
     final transactionsChart = TransactionsChart(_recentTransactions);
@@ -101,10 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _transactions,
       deleteTx: _deleteTransaction,
     );
-
-    return Scaffold(
-      appBar: appBar,
-      body: Column(
+    final body = SafeArea(
+      child: Column(
         children: [
           Container(
             height: 0.3 * bodyHeight,
@@ -112,8 +141,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Show chart'),
-                      Switch(
+                      Text(
+                        'Show chart',
+                        style: Platform.isAndroid
+                            ? CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(fontSize: 16.0)
+                            : TextStyle(fontSize: 16.0),
+                      ),
+                      SizedBox(width: 8.0),
+                      Switch.adaptive(
                         value: _showingChart,
                         onChanged: (value) {
                           setState(() => _showingChart = value);
@@ -133,13 +171,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: isLandscape
-          ? null
-          : FloatingActionButton(
-              onPressed: () => _showTransactionForm(context),
-              child: Icon(Icons.add),
-            ),
     );
+
+    return Platform.isAndroid
+        ? CupertinoPageScaffold(navigationBar: appBar, child: body)
+        : Scaffold(
+            appBar: appBar,
+            body: body,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: isLandscape
+                ? null
+                : FloatingActionButton(
+                    onPressed: () => _showTransactionForm(context),
+                    child: Icon(Icons.add),
+                  ),
+          );
   }
 }

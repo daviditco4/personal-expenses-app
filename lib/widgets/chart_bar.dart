@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
@@ -13,6 +16,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cupertinoTheme = CupertinoTheme.of(context);
     final theme = Theme.of(context);
     final barWidth = 12.0;
     final borders = Border.all();
@@ -25,7 +29,14 @@ class ChartBar extends StatelessWidget {
           children: [
             Container(
               height: 0.15 * constraints.maxHeight,
-              child: FittedBox(child: Text(title)),
+              child: FittedBox(
+                child: Text(
+                  title,
+                  style: Platform.isAndroid
+                      ? cupertinoTheme.textTheme.textStyle
+                      : null,
+                ),
+              ),
             ),
             verticalSpace,
             Container(
@@ -45,7 +56,9 @@ class ChartBar extends StatelessWidget {
                     heightFactor: spendingFractionOfMax,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: theme.primaryColor,
+                        color: Platform.isAndroid
+                            ? cupertinoTheme.primaryColor
+                            : theme.primaryColor,
                         border: borders,
                         borderRadius: circularBorder,
                       ),
@@ -61,7 +74,9 @@ class ChartBar extends StatelessWidget {
                 child: Text(
                   '\$${spendingAmount.toStringAsFixed(0)}',
                   style: TextStyle(
-                    color: theme.primaryColor,
+                    color: Platform.isAndroid
+                        ? cupertinoTheme.primaryColor
+                        : theme.primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

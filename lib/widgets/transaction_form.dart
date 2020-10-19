@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,6 +56,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    final cupertinoTheme = CupertinoTheme.of(context);
     final theme = Theme.of(context);
 
     return Padding(
@@ -90,14 +94,24 @@ class _TransactionFormState extends State<TransactionForm> {
                         _pickedDate == null
                             ? 'Choose a date'
                             : 'Date: ${DateFormat.yMd().format(_pickedDate)}',
+                        style: Platform.isAndroid
+                            ? cupertinoTheme.textTheme.textStyle
+                            : null,
                       ),
                     ),
                     FlatButton(
-                      textColor: theme.primaryColor,
+                      textColor: Platform.isAndroid
+                          ? cupertinoTheme.primaryColor
+                          : theme.primaryColor,
                       onPressed: _pickDate,
                       child: Text(
                         'Select',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: Platform.isAndroid
+                            ? CupertinoTheme.of(context)
+                                .textTheme
+                                .textStyle
+                                .copyWith(fontWeight: FontWeight.bold)
+                            : TextStyle(fontWeight: FontWeight.bold),
                       ),
                     )
                   ],
@@ -105,8 +119,15 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
               RaisedButton(
                 onPressed: _submitForm,
-                color: theme.primaryColor,
-                child: Text('Add Transaction'),
+                color: Platform.isAndroid
+                    ? cupertinoTheme.primaryColor
+                    : theme.primaryColor,
+                child: Text(
+                  'Add Transaction',
+                  style: Platform.isAndroid
+                      ? cupertinoTheme.textTheme.textStyle
+                      : null,
+                ),
               ),
             ],
           ),
