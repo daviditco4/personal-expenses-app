@@ -13,6 +13,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final barWidth = 12.0;
     final borders = Border.all();
     final circularBorder = BorderRadius.circular(barWidth / 2);
@@ -20,7 +21,6 @@ class ChartBar extends StatelessWidget {
     return LayoutBuilder(
       builder: (_, constraints) {
         final verticalSpace = SizedBox(height: 0.04 * constraints.maxHeight);
-
         return Column(
           children: [
             Container(
@@ -45,7 +45,7 @@ class ChartBar extends StatelessWidget {
                     heightFactor: spendingFractionOfMax,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
+                        color: theme.primaryColor,
                         border: borders,
                         borderRadius: circularBorder,
                       ),
@@ -61,7 +61,7 @@ class ChartBar extends StatelessWidget {
                 child: Text(
                   '\$${spendingAmount.toStringAsFixed(0)}',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: theme.primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

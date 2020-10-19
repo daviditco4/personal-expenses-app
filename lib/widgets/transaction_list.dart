@@ -11,6 +11,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final deleteIcon = Icon(Icons.delete);
+
     return _transactions.isNotEmpty
         ? ListView.builder(
             itemCount: _transactions.length,
@@ -21,7 +24,7 @@ class TransactionList extends StatelessWidget {
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 30.0,
-                    backgroundColor: Theme.of(context).primaryColorDark,
+                    backgroundColor: theme.primaryColorDark,
                     child: Padding(
                       padding: EdgeInsets.all(6.0),
                       child: FittedBox(
@@ -33,16 +36,23 @@ class TransactionList extends StatelessWidget {
                   ),
                   title: Text(
                     _transactions[index].title,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: theme.textTheme.headline6,
                   ),
                   subtitle: Text(
                     DateFormat.yMMMd().format(_transactions[index].date),
                   ),
-                  trailing: IconButton(
-                    onPressed: () => deleteTx(_transactions[index].id),
-                    color: Theme.of(context).errorColor,
-                    icon: Icon(Icons.delete),
-                  ),
+                  trailing: MediaQuery.of(context).size.width >= 500
+                      ? FlatButton.icon(
+                          onPressed: () => deleteTx(_transactions[index].id),
+                          textColor: theme.errorColor,
+                          icon: deleteIcon,
+                          label: Text('DELETE'),
+                        )
+                      : IconButton(
+                          onPressed: () => deleteTx(_transactions[index].id),
+                          color: theme.errorColor,
+                          icon: deleteIcon,
+                        ),
                 ),
               );
             },
@@ -61,7 +71,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   Text(
                     'No transactions added yet',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: theme.textTheme.headline6,
                   ),
                 ],
               );

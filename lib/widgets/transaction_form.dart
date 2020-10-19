@@ -53,6 +53,8 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -91,7 +93,7 @@ class _TransactionFormState extends State<TransactionForm> {
                       ),
                     ),
                     FlatButton(
-                      textColor: Theme.of(context).primaryColor,
+                      textColor: theme.primaryColor,
                       onPressed: _pickDate,
                       child: Text(
                         'Select',
@@ -103,7 +105,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ),
               RaisedButton(
                 onPressed: _submitForm,
-                color: Theme.of(context).primaryColor,
+                color: theme.primaryColor,
                 child: Text('Add Transaction'),
               ),
             ],
