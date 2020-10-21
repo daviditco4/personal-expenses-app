@@ -105,6 +105,7 @@ class _TransactionFormState extends State<TransactionForm> {
               AdaptiveTextField(
                 controller: _amountController,
                 onSubmitted: (_) => _submitForm(),
+                keyboardType: TextInputType.number,
                 label: 'Amount',
               ),
               Padding(

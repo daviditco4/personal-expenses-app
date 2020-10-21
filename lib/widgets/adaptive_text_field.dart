@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 class AdaptiveTextField extends StatelessWidget {
   final TextEditingController controller;
   final Function onSubmitted;
+  final TextInputType keyboardType;
   final String label;
 
   AdaptiveTextField({
     @required this.controller,
     @required this.onSubmitted,
+    this.keyboardType,
     @required this.label,
   });
 
@@ -20,14 +22,14 @@ class AdaptiveTextField extends StatelessWidget {
         ? CupertinoTextField(
             controller: controller,
             onSubmitted: onSubmitted,
+            keyboardType: keyboardType,
             placeholder: label,
           )
         : TextField(
             controller: controller,
             onSubmitted: onSubmitted,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
+            keyboardType: keyboardType,
+            decoration: InputDecoration(labelText: label),
           );
   }
 }
