@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -41,7 +43,7 @@ class TransactionsChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(15.0),
-      elevation: 5.0,
+      elevation: Platform.isIOS ? 0.0 : 5.0,
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Row(

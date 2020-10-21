@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'models/transaction.dart';
@@ -61,18 +64,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _showTransactionForm(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (_) {
-        return TransactionForm(
-          onSubmit: (tx) {
-            setState(() => _transactions.add(tx));
-            Navigator.of(context).pop();
-          },
-        );
+    final transactionForm = TransactionForm(
+      onSubmit: (tx) {
+        setState(() => _transactions.add(tx));
+        Navigator.of(context).pop();
       },
     );
+
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (_) => CupertinoPopupSurface(child: transactionForm),
+      );
+    } else {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (_) => transactionForm,
+      );
+    }
   }
 
   void _deleteTransaction(String id) {
@@ -85,15 +95,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final isLandscape = media.orientation == Orientation.landscape;
-    final appBar = AppBar(
-      title: Text(widget.title),
-      actions: [
-        IconButton(
-          onPressed: () => _showTransactionForm(context),
-          icon: Icon(Icons.add),
-        ),
-      ],
-    );
+    final titleText = Text(widget.title);
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: titleText,
+            trailing: CupertinoButton(
+              onPressed: () => _showTransactionForm(context),
+              padding: EdgeInsets.zero,
+              child: Icon(CupertinoIcons.add, size: 32.0),
+            ),
+          )
+        : AppBar(
+            title: titleText,
+            actions: [
+              IconButton(
+                onPressed: () => _showTransactionForm(context),
+                icon: Icon(Icons.add),
+              ),
+            ],
+          );
     final bodyHeight =
         media.size.height - (media.padding.top + appBar.preferredSize.height);
     final transactionsChart = TransactionsChart(_recentTransactions);
@@ -101,10 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _transactions,
       deleteTx: _deleteTransaction,
     );
-
-    return Scaffold(
-      appBar: appBar,
-      body: Column(
+    final body = SafeArea(
+      child: Column(
         children: [
           Container(
             height: 0.3 * bodyHeight,
@@ -112,8 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Show chart'),
-                      Switch(
+                      Text(
+                        'Show chart',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      SizedBox(width: 8.0),
+                      Switch.adaptive(
                         value: _showingChart,
                         onChanged: (value) {
                           setState(() => _showingChart = value);
@@ -133,13 +155,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: isLandscape
-          ? null
-          : FloatingActionButton(
-              onPressed: () => _showTransactionForm(context),
-              child: Icon(Icons.add),
-            ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(navigationBar: appBar, child: body)
+        : Scaffold(
+            appBar: appBar,
+            body: body,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: isLandscape
+                ? null
+                : FloatingActionButton(
+                    onPressed: () => _showTransactionForm(context),
+                    child: Icon(Icons.add),
+                  ),
+          );
   }
 }

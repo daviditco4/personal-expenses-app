@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
+import 'adaptive_flat_button.dart';
+import 'adaptive_raised_button.dart';
+import 'adaptive_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
   final Function onSubmit;
@@ -34,27 +40,52 @@ class _TransactionFormState extends State<TransactionForm> {
     }
   }
 
-  void _pickDate() {
-    DateTime today = DateTime.now();
+  void _setDate(DateTime date) {
+    if (date != null) {
+      setState(() {
+        _pickedDate = date;
+      });
+    }
+  }
 
-    showDatePicker(
-      context: context,
-      initialDate: _pickedDate == null ? today : _pickedDate,
-      firstDate: DateTime(2020),
-      lastDate: today,
-    ).then((date) {
-      if (date != null) {
-        setState(() {
-          _pickedDate = date;
-        });
-      }
-    });
+  void _pickDate() {
+    final today = DateTime.now();
+    final initialDate = _pickedDate == null ? today : _pickedDate;
+    final newYear = DateTime(2020);
+    var currentDate = initialDate;
+
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (_) {
+          return CupertinoPopupSurface(
+            child: SizedBox(
+              height: 190.0,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: initialDate,
+                minimumDate: newYear,
+                maximumDate: today,
+                onDateTimeChanged: (date) {
+                  currentDate = date;
+                },
+              ),
+            ),
+          );
+        },
+      ).then((_) => _setDate(currentDate));
+    } else {
+      showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: newYear,
+        lastDate: today,
+      ).then(_setDate);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -66,20 +97,15 @@ class _TransactionFormState extends State<TransactionForm> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              TextField(
+              AdaptiveTextField(
                 controller: _titleController,
                 onSubmitted: (_) => _submitForm(),
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                ),
+                label: 'Title',
               ),
-              TextField(
+              AdaptiveTextField(
                 controller: _amountController,
-                keyboardType: TextInputType.number,
                 onSubmitted: (_) => _submitForm(),
-                decoration: InputDecoration(
-                  labelText: 'Amount',
-                ),
+                label: 'Amount',
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -90,23 +116,16 @@ class _TransactionFormState extends State<TransactionForm> {
                         _pickedDate == null
                             ? 'Choose a date'
                             : 'Date: ${DateFormat.yMd().format(_pickedDate)}',
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
-                    FlatButton(
-                      textColor: theme.primaryColor,
-                      onPressed: _pickDate,
-                      child: Text(
-                        'Select',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )
+                    AdaptiveFlatButton(onPressed: _pickDate, text: 'Select'),
                   ],
                 ),
               ),
-              RaisedButton(
+              AdaptiveRaisedButton(
                 onPressed: _submitForm,
-                color: theme.primaryColor,
-                child: Text('Add Transaction'),
+                text: 'Add Transaction',
               ),
             ],
           ),

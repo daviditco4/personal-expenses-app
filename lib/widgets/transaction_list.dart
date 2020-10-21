@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,14 +15,16 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final deleteIcon = Icon(Icons.delete);
+    final deleteIcon = Platform.isIOS
+        ? Icon(CupertinoIcons.delete_solid, size: 24.0)
+        : Icon(Icons.delete);
 
     return _transactions.isNotEmpty
         ? ListView.builder(
             itemCount: _transactions.length,
             itemBuilder: (_, index) {
               return Card(
-                elevation: 5.0,
+                elevation: Platform.isIOS ? 0.0 : 5.0,
                 margin: EdgeInsets.all(6.0),
                 child: ListTile(
                   leading: CircleAvatar(
