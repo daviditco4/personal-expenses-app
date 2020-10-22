@@ -9,7 +9,7 @@ class AdaptiveTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String label;
 
-  AdaptiveTextField({
+  const AdaptiveTextField({
     @required this.controller,
     @required this.onSubmitted,
     this.keyboardType,

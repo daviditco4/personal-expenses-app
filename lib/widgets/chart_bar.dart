@@ -5,7 +5,7 @@ class ChartBar extends StatelessWidget {
   final double spendingAmount;
   final double spendingFractionOfMax;
 
-  ChartBar({
+  const ChartBar({
     @required this.title,
     @required this.spendingAmount,
     @required this.spendingFractionOfMax,
@@ -14,7 +14,7 @@ class ChartBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final barWidth = 12.0;
+    const barWidth = 12.0;
     final borders = Border.all();
     final circularBorder = BorderRadius.circular(barWidth / 2);
 

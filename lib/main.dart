@@ -20,16 +20,16 @@ class MyApp extends StatelessWidget {
         primaryColorBrightness: Brightness.light,
         accentColor: Colors.deepPurple.shade200,
         fontFamily: 'Quicksand',
-        textTheme: TextTheme(
-          headline6: TextStyle(
+        textTheme: const TextTheme(
+          headline6: const TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
             fontSize: 16.0,
           ),
         ),
-        appBarTheme: AppBarTheme(
-          textTheme: TextTheme(
-            headline6: TextStyle(
+        appBarTheme: const AppBarTheme(
+          textTheme: const TextTheme(
+            headline6: const TextStyle(
               fontFamily: 'OpenSans',
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
@@ -39,13 +39,13 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Personal Expenses'),
+      home: const MyHomePage(title: 'Personal Expenses'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tx) {
-      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+      return tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
 
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
             trailing: CupertinoButton(
               onPressed: () => _showTransactionForm(context),
               padding: EdgeInsets.zero,
-              child: Icon(CupertinoIcons.add, size: 32.0),
+              child: const Icon(CupertinoIcons.add, size: 32.0),
             ),
           )
         : AppBar(
@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               IconButton(
                 onPressed: () => _showTransactionForm(context),
-                icon: Icon(Icons.add),
+                icon: const Icon(Icons.add),
               ),
             ],
           );
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         'Show chart',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      SizedBox(width: 8.0),
+                      const SizedBox(width: 8.0),
                       Switch.adaptive(
                         value: _showingChart,
                         onChanged: (value) {
@@ -168,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? null
                 : FloatingActionButton(
                     onPressed: () => _showTransactionForm(context),
-                    child: Icon(Icons.add),
+                    child: const Icon(Icons.add),
                   ),
           );
   }

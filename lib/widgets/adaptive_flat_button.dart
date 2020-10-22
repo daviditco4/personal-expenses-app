@@ -8,7 +8,7 @@ class AdaptiveFlatButton extends StatelessWidget {
   final Color textColor;
   final String text;
 
-  AdaptiveFlatButton({
+  const AdaptiveFlatButton({
     @required this.onPressed,
     this.textColor,
     @required this.text,
@@ -29,7 +29,7 @@ class AdaptiveFlatButton extends StatelessWidget {
             onPressed: onPressed,
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
   }

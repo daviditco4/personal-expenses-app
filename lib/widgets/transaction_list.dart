@@ -10,14 +10,14 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> _transactions;
   final Function deleteTx;
 
-  TransactionList(this._transactions, {@required this.deleteTx});
+  const TransactionList(this._transactions, {@required this.deleteTx});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final deleteIcon = Platform.isIOS
-        ? Icon(CupertinoIcons.delete_solid, size: 24.0)
-        : Icon(Icons.delete);
+        ? const Icon(CupertinoIcons.delete_solid, size: 24.0)
+        : const Icon(Icons.delete);
 
     return _transactions.isNotEmpty
         ? ListView.builder(
@@ -25,13 +25,13 @@ class TransactionList extends StatelessWidget {
             itemBuilder: (_, index) {
               return Card(
                 elevation: Platform.isIOS ? 0.0 : 5.0,
-                margin: EdgeInsets.all(6.0),
+                margin: const EdgeInsets.all(6.0),
                 child: ListTile(
                   leading: CircleAvatar(
                     radius: 30.0,
                     backgroundColor: theme.primaryColorDark,
                     child: Padding(
-                      padding: EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: FittedBox(
                         child: Text(
                           '\$${_transactions[index].amount.toStringAsFixed(2)}',
@@ -51,7 +51,7 @@ class TransactionList extends StatelessWidget {
                           onPressed: () => deleteTx(_transactions[index].id),
                           textColor: theme.errorColor,
                           icon: deleteIcon,
-                          label: Text('DELETE'),
+                          label: const Text('DELETE'),
                         )
                       : IconButton(
                           onPressed: () => deleteTx(_transactions[index].id),

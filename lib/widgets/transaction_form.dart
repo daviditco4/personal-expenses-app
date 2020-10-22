@@ -12,7 +12,7 @@ import 'adaptive_text_field.dart';
 class TransactionForm extends StatefulWidget {
   final Function onSubmit;
 
-  TransactionForm({@required this.onSubmit});
+  const TransactionForm({@required this.onSubmit});
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -92,7 +92,7 @@ class _TransactionFormState extends State<TransactionForm> {
       ),
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -109,7 +109,7 @@ class _TransactionFormState extends State<TransactionForm> {
                 label: 'Amount',
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
                     Expanded(

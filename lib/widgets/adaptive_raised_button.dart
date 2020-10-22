@@ -8,7 +8,7 @@ class AdaptiveRaisedButton extends StatelessWidget {
   final Color color;
   final String text;
 
-  AdaptiveRaisedButton({
+  const AdaptiveRaisedButton({
     @required this.onPressed,
     this.color,
     @required this.text,
