@@ -91,12 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final isLandscape = media.orientation == Orientation.landscape;
+  Widget _buildAdaptiveAppBar() {
     final titleText = Text(widget.title);
-    final PreferredSizeWidget appBar = Platform.isIOS
+
+    return Platform.isIOS
         ? CupertinoNavigationBar(
             middle: titleText,
             trailing: CupertinoButton(
@@ -114,6 +112,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final isLandscape = media.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = _buildAdaptiveAppBar();
     final bodyHeight =
         media.size.height - (media.padding.top + appBar.preferredSize.height);
     final transactionsChart = TransactionsChart(_recentTransactions);
