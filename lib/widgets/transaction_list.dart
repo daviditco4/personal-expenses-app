@@ -4,10 +4,10 @@ import '../models/transaction.dart';
 import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
+  const TransactionList(this._transactions, {@required this.deleteTx});
+
   final List<Transaction> _transactions;
   final Function deleteTx;
-
-  const TransactionList(this._transactions, {@required this.deleteTx});
 
   @override
   Widget build(BuildContext context) {

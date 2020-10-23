@@ -10,9 +10,9 @@ import 'adaptive_raised_button.dart';
 import 'adaptive_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
-  final Function onSubmit;
-
   const TransactionForm({@required this.onSubmit});
+
+  final Function onSubmit;
 
   @override
   _TransactionFormState createState() => _TransactionFormState();

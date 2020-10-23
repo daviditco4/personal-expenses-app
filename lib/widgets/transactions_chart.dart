@@ -7,9 +7,9 @@ import '../models/transaction.dart';
 import 'chart_bar.dart';
 
 class TransactionsChart extends StatelessWidget {
-  final List<Transaction> _recentTransactions;
-
   const TransactionsChart(this._recentTransactions);
+
+  final List<Transaction> _recentTransactions;
 
   List<Map<String, Object>> get groupedTransactionsData {
     return List.generate(7, (index) {
