@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget _buildAdaptiveAppBar() {
+  PreferredSizeWidget _buildAdaptiveAppBar() {
     final titleText = Text(widget.title);
 
     return Platform.isIOS
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
     final isLandscape = media.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = _buildAdaptiveAppBar();
+    final appBar = _buildAdaptiveAppBar();
     final bodyHeight =
         media.size.height - (media.padding.top + appBar.preferredSize.height);
     final transactionsChart = TransactionsChart(_recentTransactions);
