@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
-import 'adaptive_flat_button.dart';
-import 'adaptive_raised_button.dart';
-import 'adaptive_text_field.dart';
+import 'adaptive/adaptive_flat_button.dart';
+import 'adaptive/adaptive_raised_button.dart';
+import 'adaptive/adaptive_text_field.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({@required this.onSubmit});

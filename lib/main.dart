@@ -39,13 +39,13 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Personal Expenses'),
+      home: MyHomePage(title: 'Personal Expenses'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -127,38 +127,40 @@ class _MyHomePageState extends State<MyHomePage> {
       deleteTx: _deleteTransaction,
     );
     final body = SafeArea(
-      child: Column(
-        children: [
-          Container(
-            height: 0.3 * bodyHeight,
-            child: isLandscape
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Show chart',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(width: 8.0),
-                      Switch.adaptive(
-                        value: _showingChart,
-                        onChanged: (value) {
-                          setState(() => _showingChart = value);
-                        },
-                      ),
-                    ],
-                  )
-                : transactionsChart,
-          ),
-          Container(
-            height: 0.7 * bodyHeight,
-            child: isLandscape
-                ? _showingChart
-                    ? transactionsChart
-                    : transactionList
-                : transactionList,
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 0.3 * bodyHeight,
+              child: isLandscape
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Show chart',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        const SizedBox(width: 8.0),
+                        Switch.adaptive(
+                          value: _showingChart,
+                          onChanged: (value) {
+                            setState(() => _showingChart = value);
+                          },
+                        ),
+                      ],
+                    )
+                  : transactionsChart,
+            ),
+            Container(
+              height: 0.7 * bodyHeight,
+              child: isLandscape
+                  ? _showingChart
+                      ? transactionsChart
+                      : transactionList
+                  : transactionList,
+            ),
+          ],
+        ),
       ),
     );
 
