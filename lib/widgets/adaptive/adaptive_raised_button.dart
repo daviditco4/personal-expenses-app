@@ -24,9 +24,13 @@ class AdaptiveRaisedButton extends StatelessWidget {
             color: color ?? theme.primaryColor,
             child: Text(text),
           )
-        : RaisedButton(
+        : ElevatedButton(
             onPressed: onPressed,
-            color: color ?? theme.primaryColor,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                color ?? theme.primaryColor,
+              ),
+            ),
             child: Text(text),
           );
   }
