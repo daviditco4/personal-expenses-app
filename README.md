@@ -94,7 +94,6 @@ Screenshots:
 ## Built with
 
 * [Dart 2.13.4](https://dart.dev/) - The programming language used
-* No external libraries were used in this project
 
 ## Authors
 
