@@ -72,10 +72,10 @@ GitHub repository home page), then begin the installation by opening the file.
 
 1. Open the app.
 2. Tap the "+" button next to the app bar's title or the one at the bottom of the screen.
-3. Enter your expense title, amount and date.
+3. Enter your expense's title, amount and date.
 4. Tap "Add Transaction".
 5. If your phone is in landscape mode, you can view the expenses chart by toggling the "Show chart" switch.
-6. In the list of expenses, tap the button with a trash can icon of an entry to delete it.
+6. In the list of expenses, tap the "delete" button of an entry to delete it.
 
 Screenshots:
 
