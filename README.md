@@ -8,6 +8,17 @@ Links to the course:
 * On Udemy.com - [Flutter & Dart - The Complete Guide](https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/)
 * On Academind.com - [Learn Flutter & Dart to Build iOS & Android Apps](https://pro.academind.com/p/learn-flutter-dart-to-build-ios-android-apps-2020)
 
+## Table of contents
+
+* [Concepts used during development](#concepts-used-during-development)
+* [Getting started](#getting-started)
+  * [Prerequisites](#prerequisites)
+  * [How to use](#how-to-use)
+    * [Screenshots](#screenshots)
+* [Built with](#built-with)
+* [Authors](#authors)
+* [License](#license)
+
 ## Concepts used during development
 
 * Core widgets
@@ -77,7 +88,7 @@ GitHub repository home page), then begin the installation by opening the file.
 5. If your phone is in landscape mode, you can view the expenses chart by toggling the "Show chart" switch.
 6. In the list of expenses, tap the "delete" button of an entry to delete it.
 
-Screenshots:
+#### Screenshots
 
 <p float="left">
   <img alt="App Screenshot 1" src="/dev_assets/images/app_screenshot_1.png" width="250" />
